@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DeepSeekAIAssistants</class>
+ <widget class="QWidget" name="DeepSeekAIAssistants">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1230</width>
+    <height>832</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>DeepSeekAIAssistants</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QWidget" name="LeftLayout_2" native="true">
+     <property name="maximumSize">
+      <size>
+       <width>300</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <layout class="QVBoxLayout" name="LeftLayout">
+      <item>
+       <widget class="QLabel" name="label_history">
+        <property name="text">
+         <string>Access history</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QListWidget" name="listWidget_History"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QWidget" name="RightLeftout" native="true">
+     <layout class="QVBoxLayout" name="RightLayout_2">
+      <item>
+       <widget class="QLabel" name="label_Question">
+        <property name="text">
+         <string>Please enter the question:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="lineEdit_Input"/>
+      </item>
+      <item>
+       <widget class="QWidget" name="leftrightpushbutton" native="true">
+        <layout class="QHBoxLayout" name="IrhorizontalLayout">
+         <item>
+          <widget class="QPushButton" name="pushButton_Exit">
+           <property name="text">
+            <string>Exit</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_Commit">
+           <property name="text">
+            <string>commit</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_Admin">
+           <property name="text">
+            <string>administrator</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_Response">
+        <property name="text">
+         <string>DeepSeekAssistant Response:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTextEdit" name="textEdit_context"/>
+      </item>
+      <item>
+       <widget class="QProgressBar" name="progressBar">
+        <property name="value">
+         <number>24</number>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_Time">
+        <property name="text">
+         <string>Time elapsed:0 seconds</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
