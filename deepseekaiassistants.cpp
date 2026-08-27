@@ -238,7 +238,7 @@ void DeepSeekAIAssistants::on_pushButton_Commit_clicked()
 
     QNetworkRequest request(QUrl("https://api.deepseek.com/chat/completions"));
     request.setHeader(QNetworkRequest::ContentTypeHeader,"application/json");
-    request.setRawHeader("Authorization","Bearer sk-af85dd698b40450ca644e0125a6e85bb");
+    request.setRawHeader("Authorization","Bearer sk-xxxxxxxxxxxxxxxxx");
     request.setRawHeader("Accept","application/json");
     //request.setRawHeader("Authorization","Bearer sk-把Key填写到这里就可以");
 
