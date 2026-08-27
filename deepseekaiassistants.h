@@ -53,14 +53,18 @@ public:
 
     void loadHistory();//加载历史记录
 
-    QString getAnswerForQuestion(const QString &question);
+    QString getAnswerForQuestion(const QString &question);//获取历史回答
 
     void updateTimeLabel();
 
-    void saveQuestion(const QString &question);//保存提问
+    void saveQuestion(const QString &question);//保存提问记录
 
     void showDeletelistContextMenu(const QPoint &pos);
 
+    int m_loginAttempts = 0;//记录密码错误次数
+    bool m_isLocked;
+    QTimer *m_unlockTimer;//解锁计时器
+    QByteArray getStorePasswordHash();
 
 
 private slots:

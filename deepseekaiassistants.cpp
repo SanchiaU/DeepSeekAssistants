@@ -76,6 +76,10 @@ DeepSeekAIAssistants::DeepSeekAIAssistants(QWidget *parent)
 DeepSeekAIAssistants::~DeepSeekAIAssistants()
 {
     delete ui;
+    if(m_unlockTimer){
+        m_unlockTimer->stop();
+        m_unlockTimer->deleteLater();
+    }
 }
 void DeepSeekAIAssistants::setupDatabase(){
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
@@ -334,6 +338,71 @@ void DeepSeekAIAssistants::showDeletelistContextMenu(const QPoint &pos){
 
 void DeepSeekAIAssistants::on_pushButton_Admin_clicked()
 {
-
+    //确保成员变量已经初始化，不然密码错误重试后有问题
+    static bool initialized = false;
+    if(!initialized){
+        m_isLocked = false;
+        m_loginAttempts = 0;
+        m_unlockTimer = nullptr;
+        initialized = true;
+    }
+    //检查是否已被锁定
+    if(m_isLocked){
+        QMessageBox::warning(this,
+                             tr("登录锁定"),
+                             tr("系统提示：密码错误次数过多，请稍后再尝试！！！"),
+                             QMessageBox::Ok);
+        return;
+    }
+    //弹出密码输入对话框
+    bool ok;
+    QString password = QInputDialog::getText(
+        this,
+        tr("管理员登录"),
+        tr("系统提示：请输入管理员密码："),
+        QLineEdit::Password,
+        "",
+        &ok);
+    if(!ok)return;
+    //获取存储的正确密码哈希值
+    QByteArray inputHash = QCryptographicHash::hash(
+        password.toUtf8(),
+        QCryptographicHash::Sha256);
+    QByteArray storeHash = getStorePasswordHash();
+    if(inputHash==storeHash){
+        m_loginAttempts = 0;
+        QMessageBox::information(this,"提示","系统提示：管理员密码输入正确，登录删除历史记录对话框！！！");
+    }else{
+        m_loginAttempts++;
+        if(m_loginAttempts>=3){
+            m_isLocked = true;
+            if(!m_unlockTimer){
+                m_unlockTimer = new QTimer(this);
+                connect(m_unlockTimer,&QTimer::timeout,[this](){
+                    m_isLocked = false;
+                    m_loginAttempts = 0;
+                    m_unlockTimer->deleteLater();
+                    m_unlockTimer = nullptr;
+                });
+            }
+            m_unlockTimer->start(30000);
+            QMessageBox::warning(
+                this,
+                tr("登录锁定"),
+                tr("系统提示：密码错误次数过多，请30秒后再尝试!!!"),
+                QMessageBox::Ok);
+        }else{
+            QMessageBox::warning(
+                this,
+                tr("密码错误"),
+                tr("系统提示：剩余尝试次数为：%1").arg(3-m_loginAttempts),
+                QMessageBox::Ok);
+        }
+    }
+    //比较哈希值
 }
 
+QByteArray DeepSeekAIAssistants::getStorePasswordHash(){
+    //https://tooldeer.com/hashcalculator.html
+    return QByteArray::fromHex("8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918");
+}
