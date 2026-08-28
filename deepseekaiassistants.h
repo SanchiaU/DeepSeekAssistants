@@ -29,6 +29,8 @@
 #include<QCryptographicHash>
 #include<QInputDialog>
 
+#include"deletehistorydialog.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class DeepSeekAIAssistants;

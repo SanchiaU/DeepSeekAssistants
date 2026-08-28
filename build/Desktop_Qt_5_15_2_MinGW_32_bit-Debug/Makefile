@@ -10,9 +10,9 @@ MAKEFILE      = Makefile
 
 EQ            = =
 
-first: debug
-install: debug-install
-uninstall: debug-uninstall
+first: release
+install: release-install
+uninstall: release-uninstall
 QMAKE         = D:\qt\qt5\5.15.2\mingw81_32\bin\qmake.exe
 DEL_FILE      = del
 CHK_DIR_EXISTS= if not exist
@@ -33,28 +33,14 @@ IDC           = idc
 IDL           = midl
 ZIP           = zip -r -9
 DEF_FILE      = 
-RES_FILE      = 
+RES_FILE      = applogo_res.o
 SED           = $(QMAKE) -install sed
 MOVE          = move
 SUBTARGETS    =  \
-		debug \
-		release
+		release \
+		debug
 
 
-debug: FORCE
-	$(MAKE) -f $(MAKEFILE).Debug
-debug-make_first: FORCE
-	$(MAKE) -f $(MAKEFILE).Debug 
-debug-all: FORCE
-	$(MAKE) -f $(MAKEFILE).Debug all
-debug-clean: FORCE
-	$(MAKE) -f $(MAKEFILE).Debug clean
-debug-distclean: FORCE
-	$(MAKE) -f $(MAKEFILE).Debug distclean
-debug-install: FORCE
-	$(MAKE) -f $(MAKEFILE).Debug install
-debug-uninstall: FORCE
-	$(MAKE) -f $(MAKEFILE).Debug uninstall
 release: FORCE
 	$(MAKE) -f $(MAKEFILE).Release
 release-make_first: FORCE
@@ -69,6 +55,20 @@ release-install: FORCE
 	$(MAKE) -f $(MAKEFILE).Release install
 release-uninstall: FORCE
 	$(MAKE) -f $(MAKEFILE).Release uninstall
+debug: FORCE
+	$(MAKE) -f $(MAKEFILE).Debug
+debug-make_first: FORCE
+	$(MAKE) -f $(MAKEFILE).Debug 
+debug-all: FORCE
+	$(MAKE) -f $(MAKEFILE).Debug all
+debug-clean: FORCE
+	$(MAKE) -f $(MAKEFILE).Debug clean
+debug-distclean: FORCE
+	$(MAKE) -f $(MAKEFILE).Debug distclean
+debug-install: FORCE
+	$(MAKE) -f $(MAKEFILE).Debug install
+debug-uninstall: FORCE
+	$(MAKE) -f $(MAKEFILE).Debug uninstall
 
 Makefile: ../../DeepSeekAssistantspro.pro D:/qt/qt5/5.15.2/mingw81_32/mkspecs/win32-g++/qmake.conf D:/qt/qt5/5.15.2/mingw81_32/mkspecs/features/spec_pre.prf \
 		D:/qt/qt5/5.15.2/mingw81_32/mkspecs/qdevice.pri \
@@ -450,29 +450,29 @@ qmake: FORCE
 
 qmake_all: FORCE
 
-make_first: debug-make_first release-make_first  FORCE
-all: debug-all release-all  FORCE
-clean: debug-clean release-clean  FORCE
-distclean: debug-distclean release-distclean  FORCE
+make_first: release-make_first debug-make_first  FORCE
+all: release-all debug-all  FORCE
+clean: release-clean debug-clean  FORCE
+distclean: release-distclean debug-distclean  FORCE
 	-$(DEL_FILE) Makefile
 	-$(DEL_FILE) .qmake.stash
 
-debug-mocclean:
-	$(MAKE) -f $(MAKEFILE).Debug mocclean
 release-mocclean:
 	$(MAKE) -f $(MAKEFILE).Release mocclean
-mocclean: debug-mocclean release-mocclean
+debug-mocclean:
+	$(MAKE) -f $(MAKEFILE).Debug mocclean
+mocclean: release-mocclean debug-mocclean
 
-debug-mocables:
-	$(MAKE) -f $(MAKEFILE).Debug mocables
 release-mocables:
 	$(MAKE) -f $(MAKEFILE).Release mocables
-mocables: debug-mocables release-mocables
+debug-mocables:
+	$(MAKE) -f $(MAKEFILE).Debug mocables
+mocables: release-mocables debug-mocables
 
 check: first
 
 benchmark: first
 FORCE:
 
-$(MAKEFILE).Debug: Makefile
 $(MAKEFILE).Release: Makefile
+$(MAKEFILE).Debug: Makefile

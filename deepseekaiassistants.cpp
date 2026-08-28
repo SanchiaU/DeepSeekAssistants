@@ -242,7 +242,7 @@ void DeepSeekAIAssistants::on_pushButton_Commit_clicked()
 
     QNetworkRequest request(QUrl("https://api.deepseek.com/chat/completions"));
     request.setHeader(QNetworkRequest::ContentTypeHeader,"application/json");
-    request.setRawHeader("Authorization","Bearer sk-xxxxxxxxxxxxxxxxx");
+    request.setRawHeader("Authorization","Bearer sk-xxxxxxxxxxxxxxxx");
     request.setRawHeader("Accept","application/json");
     //request.setRawHeader("Authorization","Bearer sk-把Key填写到这里就可以");
 
@@ -372,6 +372,9 @@ void DeepSeekAIAssistants::on_pushButton_Admin_clicked()
     if(inputHash==storeHash){
         m_loginAttempts = 0;
         QMessageBox::information(this,"提示","系统提示：管理员密码输入正确，登录删除历史记录对话框！！！");
+        DeleteHistoryDialog *dialog = new DeleteHistoryDialog(this);
+        dialog->setAttribute(Qt::WA_DeleteOnClose);
+        dialog->exec();
     }else{
         m_loginAttempts++;
         if(m_loginAttempts>=3){
