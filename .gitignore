@@ -1,0 +1,25 @@
+# 构建文件
+build/
+*-build/
+makefile
+makefile.*
+
+# Qt Creator用户配置
+*.pro.user
+
+# 编译产物
+*.o
+*.obj
+*.exe
+*.dll
+
+# 数据库和日志
+*.db
+*.sqlite
+*.log
+
+# 密钥和配置
+.env
+config.ini
+*.pem
+*.key
