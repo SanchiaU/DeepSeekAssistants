@@ -3,7 +3,7 @@ build/
 *-build/
 makefile
 makefile.*
-
+QtReleasePack/
 # Qt Creator用户配置
 *.pro.user
 
